@@ -1,0 +1,14 @@
+<!-- templates/index.html -->
+<html>
+<head>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <h1>htmx with FastAPI Example</h1>
+    <button hx-get="/update" hx-target="#result">Click me!</button>
+    <div id="result"></div>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.6.1/dist/htmx.min.js"></script>
+    <script src="../static/htmx_script.js"></script>
+</body>
+</html>
+
