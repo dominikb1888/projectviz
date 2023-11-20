@@ -1,22 +1,15 @@
 {
   "name": "FastAPI Codespace",
-
-  // Use the Dockerfile created above
-  "dockerFile": "Dockerfile",
-
-  // Any extensions to install (optional)
+  "image": "python:3.11.5-slim",
+  "forwardPorts": [8000],
   "extensions": [
     "ms-python.python",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode"
   ],
-
-  // Forward the port for FastAPI
-  "forwardPorts": [8000],
-
-  // Settings to automatically open a workspace folder
   "settings": {
     "terminal.integrated.cwd": "/workspace"
-  }
+  },
+  "postCreateCommand": "pip install -r /workspace/requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
 }
 
