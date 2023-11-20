@@ -1,0 +1,22 @@
+{
+  "name": "FastAPI Codespace",
+
+  // Use the Dockerfile created above
+  "dockerFile": "Dockerfile",
+
+  // Any extensions to install (optional)
+  "extensions": [
+    "ms-python.python",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ],
+
+  // Forward the port for FastAPI
+  "forwardPorts": [8000],
+
+  // Settings to automatically open a workspace folder
+  "settings": {
+    "terminal.integrated.cwd": "/workspace"
+  }
+}
+
