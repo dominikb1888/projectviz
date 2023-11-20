@@ -8,8 +8,8 @@
     "esbenp.prettier-vscode"
   ],
   "settings": {
-    "terminal.integrated.cwd": "/workspace"
+    "terminal.integrated.cwd": "/workspaces/projectviz"
   },
-  "postCreateCommand": "pip install -r /workspace/requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
+  "postCreateCommand": "pip install -r /workspaces/projectviz/requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
 }
 
