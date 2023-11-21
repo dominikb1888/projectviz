@@ -44,5 +44,5 @@
   "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "go version",
+  "postCreateCommand": "uvicorn main:app --host 0.0.0.0 --port 8000",
 }
