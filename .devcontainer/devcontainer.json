@@ -41,7 +41,13 @@
   //],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [],
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Application",
+      "onAutoForward": "openBrowser"
+    }
+  },
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "uvicorn main:app --host 0.0.0.0 --port 8000"
