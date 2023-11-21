@@ -30,15 +30,15 @@
   "onCreateCommand": "nix-shell --command 'echo done building nix dev environment'",
 
   // Add the IDs of extensions you want installed when the container is created.
-  //"extensions": [
+  "extensions": [
     // select nix environment
-    //"arrterian.nix-env-selector"
+    "arrterian.nix-env-selector"
 
     // extra extensions
-    //"fsevenm.run-it-on",
-    //"jnoortheen.nix-ide",
-    //"ms-python.python"
-  //],
+    "fsevenm.run-it-on",
+    "jnoortheen.nix-ide",
+    "ms-python.python"
+  ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [8000],
