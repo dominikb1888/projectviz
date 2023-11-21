@@ -2,8 +2,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  pythonPkgs = pkgs.python3Packages;
-  myPackages = with pythonPkgs; [
+  pythonPackages = with pkgs.python311Packages; [
     fastapi
     uvicorn
     requests
@@ -11,20 +10,15 @@ let
 
     jupyterlab
     ipython
-    # Add more Python packages here as needed
+
+    pip
   ];
-in
-pkgs.mkShell {
-  name = "python-env";
-
+# https://ryantm.github.io/nixpkgs/languages-frameworks/python/#how-to-consume-python-modules-using-pip-in-a-virtual-environment-like-i-am-used-to-on-other-operating-systems
+in pkgs.mkShell rec {
   buildInputs = [
-    pythonPkgs.python
-    pythonPkgs.pip
-
-  ] ++ myPackages;
-
-  shellHook = ''
-    export PYTHONPATH=$PYTHONPATH:${toString (builtins.head myPackages)}/lib/python3.*/site-packages
-  '';
+    # A Python interpreter including the 'venv' module is required to bootstrap
+    # the environment.
+    pkgs.python311
+    pythonPackages
+  ];
 }
-
