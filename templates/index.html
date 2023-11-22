@@ -14,7 +14,9 @@
       <ul id="repolist">
         {% for repo in repos %}
           <ul id="images">
-            {{repo.images}}
+            {% for imageurl in repo.images %}
+            <li><img src="{{imageurl}}" /></li>
+            {% endfor %}
           </ul>
          
             <div id="user">
