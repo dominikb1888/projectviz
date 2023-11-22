@@ -7,7 +7,7 @@ let
     uvicorn
     requests
     python-dotenv
-
+    pandas
     jupyterlab
     ipython
 
