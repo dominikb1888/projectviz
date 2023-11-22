@@ -3,6 +3,7 @@ import json
 import os
 
 import requests
+import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -52,7 +53,7 @@ def get_data(org=GHORG):
                  "commits": commits,
                  "commit_count": len(commits),
                  "commit_latest": commits[-1],
-                 "commit_latest_date": commits[-1]['commit']['author']['date'],
+                 "commit_latest_date": str(commits[-1]['commit']['author']['date']),
                  "commit_latest_message": commits[-1]['commit']['message'],
                  "commit_histogram_daily": get_commit_histogram(commits),
                  "languages": languages,
@@ -60,15 +61,17 @@ def get_data(org=GHORG):
 
         repo_list.append(item)
 
-    with open('data.json', 'w') as f:
-        json.dump(repo_list, f)
+
+        df = pd.DataFrame(repo_list)
+        df.to_json("data.json")
 
     return repo_list
 
 def get_commit_histogram(commits):
     dates = []
     for commit in commits:
-        dates.append(datetime.strptime(commit['commit']['author']['date'], "%Y-%m-%dT%H:%M:%SZ").day)
+        date = datetime.strptime(commit['commit']['author']['date'], "%Y-%m-%dT%H:%M:%SZ")
+        dates.append(date.date)
     return dates
 
 def sparkline(data, figsize=(4,0.25),**kwags):

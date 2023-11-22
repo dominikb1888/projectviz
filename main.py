@@ -19,9 +19,6 @@ async def index(request: Request):
 
 @app.get("/data")
 async def data():
-    # if d.get_data():
-    #     data = d.get_data()
-    # else:
     with open("data.json") as f:
         data = json.load(f)
 
