@@ -10,21 +10,9 @@
   </head>
   
   <body>
-
-    <div hx-ext="client-side-templates">
-
-      <button
-         type="button"
-         hx-trigger="load, click"
-         hx-get="data"
-         mustache-array-template="repolist"
-         hx-get="/data"
-         hx-target="#list"
-         hx-swap="innerHTML"
-      >Reload</button>
-
-      <template id="repolist">
-        {{#data}}
+    
+      <ul id="repolist">
+        {% for repo in data %}
           <li>
             <img src="{{avatar}}" width="100" />
             <small>{{user}}</small>
@@ -32,10 +20,8 @@
             <p>{{repo.description}}</p>
             <small>{{commit_count}}</small>
           </li>
-        {{/ data}}
-      </template>
-      
-      <ul id="list"></ul>
+        {% endfor %}
+        </ul>
    
     </div>
   </body>
