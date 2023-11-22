@@ -14,17 +14,14 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    with open("templates/index.html", "r") as file:
-        html_content = file.read()
-
-    return templates.TemplateResponse(index.html, data())
-
-@app.get("/data")
-async def data():
     with open("data.json") as f:
-        data = json.load(f)
+        repos = json.load(f)
+    return templates.TemplateResponse('index.html', {'request': request, 'repos': repos})
 
-    return data
+@app.get("/repos")
+async def repos():
+    d.get_data()
+    return 'Repos updated'
 
 
 

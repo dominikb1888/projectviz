@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+    font-family: 'Lato', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+ul#repolist>li {
+    display: inline-block;
+}
+
+#repolist small {
+    z-index: 100;
+    background-color: lightcoral;
+
+} 
+
+#repolist img {
+    width: 250px;
+    float: left;
+    z-index: 0;
+}
+

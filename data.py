@@ -25,12 +25,12 @@ def get_repo(org=GHORG, repos=True, *args):
     return requests.get(url, headers=headers).json()
 
 def filter_images(json_list):
+    images = []
     for content in json_list:
         if content['type'] == 'file' and content['path'].endswith(('.jpg','.gif','.png')):
-            image_url = content['download_url']
-            return image_url
+            images.append(content['download_url'])
 
-    return None
+    return images
 
 def get_data(org=GHORG):
     repo_list = []
@@ -61,9 +61,8 @@ def get_data(org=GHORG):
 
         repo_list.append(item)
 
-
         df = pd.DataFrame(repo_list)
-        df.to_json("data.json")
+        df.to_json("data.json", orient='records')
 
     return repo_list
 
