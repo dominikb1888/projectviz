@@ -70,7 +70,7 @@ def get_commit_histogram(commits):
     dates = []
     for commit in commits:
         date = datetime.strptime(commit['commit']['author']['date'], "%Y-%m-%dT%H:%M:%SZ")
-        dates.append(date.date)
+        dates.append(date.date())
     return dates
 
 def sparkline(data, figsize=(4,0.25),**kwags):

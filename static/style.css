@@ -4,19 +4,73 @@ body {
     font-family: 'Lato', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-ul#repolist>li {
-    display: inline-block;
+ul#repolist {
+    max-width: 1800px;
+    margin: auto;
+    
 }
 
-#repolist small {
+ul#repolist > li {
+    display: block;
+    float: left;
+    width: 340px;
+    height: 150px;
+    background: lightcoral;
+    margin: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 5px solid lightcoral;
+}
+
+ul#repolist small {
     z-index: 100;
     background-color: lightcoral;
 
 } 
 
-#repolist img {
-    width: 250px;
+ul#repolist img {
+    width: 150px;
     float: left;
+    position: relative;
+    top: -275px;
+    margin-right: 10px;
     z-index: 0;
+}
+
+ul#repolist div.histogram {
+    position: relative;
+    height: 200px;
+    top: -55px;
+    overflow: hidden;
+    z-index: 10;
+    opacity: 0.9;
+}
+
+ul#repolist span.commit_count {
+    font-size: 1.2em;
+    color: white;
+    font-weight:900;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: yellowgreen;
+    position: relative;
+    left: 124px;
+    top: -28px;
+    z-index: 20;
+}
+
+ul#repolist a.username {
+    display: block;
+    background-color: yellowgreen;
+    color: white;
+    text-decoration: none;
+    z-index: 100;
+    width: 330px;
+    height: 20px;
+    padding: 5px 10px;
+    position: relative;
+    top: 120px;
 }
 

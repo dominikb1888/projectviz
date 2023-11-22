@@ -5,31 +5,58 @@
   <head>
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}"">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.6.1/dist/htmx.min.js"></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
-    <script src="https://unpkg.com/mustache@latest"></script>
+    <script src="https://unpkg.com/underscore@1.13.6/underscore-umd-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" charset="utf-8"></script>
+    <script>
+      function genHistograms() {
+        d3.selectAll(".histogram").each(function(d,i) {
+          const grouped = _.countBy(JSON.parse(d3.select(this).attr("data-histogram")));
+          console.log(grouped)
+          const vals = Array.from(Object.values(grouped))
+          d3.select(this)
+            .selectAll("div")
+            .data(vals)
+            .enter()
+            .append("div")
+              .style("background", "lightcoral")
+              .style("padding", "2px")
+              .style("width", d => `${d * 5}px`)
+              .style("height", '15px')
+          
+          return this
+        });
+        
+      }
+    </script>
   </head>
 
-  <body>
+  <body onload="genHistograms()">
 
       <ul id="repolist">
         {% for repo in repos %}
+        <li>
+          <a href="{{repo.repo.html_url}}" class="username">{{repo.user}}</a>
+          <div id="user">
+            <span class="commit_count">{{repo.commit_count}}</span>
+            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}"></div>
+            <a href="{{repo.repo.html_url}}"><img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/></a>
+            
+            <span class="description">{{repo.description}}</span>
+            
+           
+            
+            
+            
+          </div>
+  
           <ul id="images">
             {% for imageurl in repo.images %}
             <li><img src="{{imageurl}}" /></li>
             {% endfor %}
           </ul>
-         
-            <div id="user">
-              <a href="{{repo.repo.html_url}}"><img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/></a></li>
-              <a href="{{repo.repo.html_url}}">{{repo.user}}</a>  
-            </div>  
-            <ul>
-                <li class="description">{{repo.description}}</li>
-                <li class="commit_count">{{repo.commit_count}}</li>
-              </ul>
-          </li>
+        </li>
         {% endfor %}
-        </ul>
+      </ul>
 
     </div>
   </body>

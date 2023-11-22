@@ -19,9 +19,14 @@ async def index(request: Request):
     return templates.TemplateResponse('index.html', {'request': request, 'repos': repos})
 
 @app.get("/repos")
-async def repos():
-    d.get_data()
-    return 'Repos updated'
-
+async def repos(update: bool = False):
+    if update:
+        data = d.get_data()
+    else:
+        with open("data.json") as file:
+            data = json.load(file)
+       
+    
+    return data
 
 
