@@ -7,70 +7,95 @@ body {
 ul#repolist {
     max-width: 1800px;
     margin: auto;
-    
 }
 
 ul#repolist > li {
     display: block;
     float: left;
-    width: 340px;
-    height: 150px;
+    width: 320px;
+    height: 160px;
     background: lightcoral;
     margin: 10px;
     border-radius: 20px;
     overflow: hidden;
-    border: 5px solid lightcoral;
-}
-
-ul#repolist small {
-    z-index: 100;
-    background-color: lightcoral;
-
+    border: 5px solid yellowgreen;
+    border-bottom: 0;
 } 
 
-ul#repolist img {
-    width: 150px;
-    float: left;
-    position: relative;
-    top: -275px;
-    margin-right: 10px;
-    z-index: 0;
+ul#repolist div.stats {
+    height: 120px;
+    overflow: hidden;
 }
+
+
+
+
 
 ul#repolist div.histogram {
     position: relative;
     height: 200px;
-    top: -55px;
+    top: -25px;
     overflow: hidden;
     z-index: 10;
     opacity: 0.9;
 }
 
-ul#repolist span.commit_count {
+ul#repolist div.histogram svg {
+    position: relative;
+    top: 5px;
+}
+
+ul#repolist ul.images,
+ul#repolist ul.images li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul#repolist ul.images img {
+    width: 320px;
+    position:relative;
+    top: -250px;
+    z-index: 0;
+}
+
+
+ul#repolist div.commit_count {
     font-size: 1.2em;
     color: white;
     font-weight:900;
-    padding: 5px;
-    width: 50px;
-    height: 50px;
+    padding: 5px 5px 0 5px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: yellowgreen;
+    display: block;
     position: relative;
-    left: 124px;
-    top: -28px;
+    left: 284px;
     z-index: 20;
+    text-align: center;
 }
 
-ul#repolist a.username {
-    display: block;
+ul#repolist div.user {
     background-color: yellowgreen;
-    color: white;
-    text-decoration: none;
     z-index: 100;
     width: 330px;
-    height: 20px;
-    padding: 5px 10px;
+    height: 40px;
     position: relative;
-    top: 120px;
+    padding-left: 15px;
+}
+
+ul#repolist div.user a {
+    color: white;
+    font-weight: 900;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+ul#repolist div.user img {
+    height: 40px; 
+    position: relative;
+    margin-right: 10px;
+    z-index: 0;
 }
 

@@ -1,9 +1,12 @@
-from datetime import datetime
+from collections import Counter
+from datetime import datetime, timedelta
 import json
 import os
 
 import requests
 import pandas as pd
+
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,6 +14,7 @@ load_dotenv()
 GHTOKEN = os.getenv("GHTOKEN")
 GHURL = os.getenv("GHURL")
 GHORG = os.getenv("GHORG")
+STARTDATE = os.getenv("STARTDATE")
 
 print(GHURL, GHORG)
 
@@ -55,12 +59,12 @@ def get_data(org=GHORG):
                  "commit_latest": commits[-1],
                  "commit_latest_date": str(commits[-1]['commit']['author']['date']),
                  "commit_latest_message": commits[-1]['commit']['message'],
-                 "commit_histogram_daily": get_commit_histogram(commits),
+                 "commit_histogram_daily": json.dumps(get_commit_histogram(commits)),
                  "languages": languages,
                }
 
         repo_list.append(item)
-
+        repo_list = sorted(repo_list, key=lambda x: x['commit_latest_date'], reverse=True )
         df = pd.DataFrame(repo_list)
         df.to_json("data.json", orient='records')
 
@@ -71,7 +75,19 @@ def get_commit_histogram(commits):
     for commit in commits:
         date = datetime.strptime(commit['commit']['author']['date'], "%Y-%m-%dT%H:%M:%SZ")
         dates.append(date.date())
-    return dates
+    
+    count = dict(Counter(dates))
+    sd = datetime.strptime(STARTDATE,'%Y-%m-%d')
+    days = {}
+
+    for i in range(120+1):
+        days[str(sd.date() + timedelta(days=i))] = 0
+    
+    for k, v in count.items():
+        print(k, v)
+        days[str(k)] = v
+
+    return days
 
 def sparkline(data, figsize=(4,0.25),**kwags):
     data = list(data)
