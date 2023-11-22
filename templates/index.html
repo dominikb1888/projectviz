@@ -1,18 +1,21 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
+  
   <head>
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.6.1/dist/htmx.min.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
   </head>
+  
   <body>
+
     <div hx-ext="client-side-templates">
-      <!-- hx-trigger="load, click" makes sure that api gets called on page load AND on click  !-->
+
       <button
          type="button"
-         hx-trigger="click"
+         hx-trigger="load, click"
          hx-get="data"
          mustache-array-template="repolist"
          hx-get="/data"
@@ -30,9 +33,10 @@
             <small>{{commit_count}}</small>
           </li>
         {{/ data}}
-
       </template>
+      
       <ul id="list"></ul>
+   
     </div>
   </body>
 </html>
