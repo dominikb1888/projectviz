@@ -75,39 +75,16 @@ def get_commit_histogram(commits):
     for commit in commits:
         date = datetime.strptime(commit['commit']['author']['date'], "%Y-%m-%dT%H:%M:%SZ")
         dates.append(date.date())
-    
+
     count = dict(Counter(dates))
     sd = datetime.strptime(STARTDATE,'%Y-%m-%d')
     days = {}
 
     for i in range(120+1):
         days[str(sd.date() + timedelta(days=i))] = 0
-    
+
     for k, v in count.items():
         print(k, v)
         days[str(k)] = v
 
     return days
-
-def sparkline(data, figsize=(4,0.25),**kwags):
-    data = list(data)
-    fig,ax = plt.subplots(1,1,figsize=figsize,**kwags)
-    ax.plot(data)
-
-    for k,v in ax.spines.items():
-        v.set_visible(False)
-
-    ax.set_xticks([])
-    ax.set_yticks([])
-
-    plt.plot(len(data)-1, data[len(data)-1], 'r.')
-
-    ax.fill_between(range(len(data)), data, len(data)*[min(data)], alpha=0.1)
-
-    img = BytesIO()
-    plt.savefig(img, transparent=True, bbox_inches='tight')
-    img.seek(0)
-#     plt.show()
-    plt.close()
-
-    return base64.b64encode(img.read()).decode("utf-8")
