@@ -54,12 +54,11 @@ def get_data(org=GHORG):
             key=lambda commit: commit["commit"]["author"]["date"],
         )
         languages = get_repo(org, False, project, "languages")
-
-        # Mapping Data
+        user = repo["parent"]["owner"] if repo.get("parent", False) else repo['owner']        # Mapping Data
         item = {
-            "user": repo["parent"]["owner"]["login"],
+            "user": user['login'],
             "repo": repo,
-            "avatar": repo["parent"]["owner"]["avatar_url"],
+            "avatar": user["avatar_url"],
             "description": repo["description"],
             "tags": tags,
             "images": filter_images(contents),
