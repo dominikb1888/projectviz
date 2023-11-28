@@ -54,9 +54,11 @@ def get_data(org=GHORG):
             key=lambda commit: commit["commit"]["author"]["date"],
         )
         languages = get_repo(org, False, project, "languages")
-        user = repo["parent"]["owner"] if repo.get("parent", False) else repo['owner']        # Mapping Data
+        user = (
+            repo["parent"]["owner"] if repo.get("parent", False) else repo["owner"]
+        )  # Mapping Data
         item = {
-            "user": user['login'],
+            "user": user["login"],
             "repo": repo,
             "avatar": user["avatar_url"],
             "description": repo["description"],
@@ -82,22 +84,11 @@ def get_data(org=GHORG):
 
 
 def get_commit_histogram(commits):
-    dates = []
-    for commit in commits:
-        date = datetime.strptime(
+    dates = [
+        datetime.strptime(
             commit["commit"]["author"]["date"], "%Y-%m-%dT%H:%M:%SZ"
-        )
-        dates.append(date.date())
+        ).date()
+        for commit in commits
+    ]
 
-    count = dict(Counter(dates))
-    sd = datetime.strptime(STARTDATE, "%Y-%m-%d")
-    days = {}
-
-    for i in range(120 + 1):
-        days[str(sd.date() + timedelta(days=i))] = 0
-
-    for k, v in count.items():
-        print(k, v)
-        days[str(k)] = v
-
-    return days
+    return [{"date": str(k), "count": v} for k, v in dict(Counter(dates)).items()]
