@@ -1,5 +1,5 @@
 from collections import Counter
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import os
 
@@ -19,16 +19,39 @@ STARTDATE = os.getenv("STARTDATE")
 print(GHURL, GHORG)
 
 
-def get_repo(org=GHORG, repos=True, *args):
+def get_repo(org, repos=True, *args):
+    base_url = f"https://api.github.com"
+
     if repos:
-        return requests.get(f"{GHURL}/orgs/{org}/repos").json()
+        url = f"{base_url}/orgs/{org}/repos"
+    else:
+        url = f"{base_url}/repos/{org}"
+        for arg in args:
+            url += f"/{arg}"
 
     headers = {"Authorization": f"token {GHTOKEN}"}
-    url = f"{GHURL}/repos/{org}"
-    for arg in args:
-        url += f"/{arg}"
-    return requests.get(url, headers=headers).json()
 
+    all_data = []
+    page = 1
+    per_page = 100  # Number of items per page
+
+    while True:
+        params = {"per_page": per_page, "page": page}
+        response = requests.get(url, headers=headers, params=params)
+        
+        if response.status_code == 200:
+            data = response.json()
+            data = [data] if not isinstance(data, list) else data
+            all_data.extend(data)
+            if len(data) < per_page:
+                break
+            else:
+                page += 1
+        else:
+            print(f"Failed to fetch data. Status code: {response.status_code}")
+            break
+            
+    return all_data
 
 def filter_images(json_list):
     images = []
@@ -45,8 +68,8 @@ def get_data(org=GHORG):
     repo_list = []
     for repo in get_repo(org=org, repos=True):
         project = repo["name"]
-
-        repo = get_repo(org, False, project)
+        full_repo = get_repo(org, False, project)[0]
+        print(full_repo)
         tags = get_repo(org, False, project, "tags")
         contents = get_repo(org, False, project, "contents")
         commits = sorted(
@@ -55,13 +78,13 @@ def get_data(org=GHORG):
         )
         languages = get_repo(org, False, project, "languages")
         user = (
-            repo["parent"]["owner"] if repo.get("parent", False) else repo["owner"]
+            full_repo["parent"]["owner"] if full_repo.get("parent", False) else full_repo["owner"]
         )  # Mapping Data
         item = {
             "user": user["login"],
-            "repo": repo,
+            "repo": full_repo,
             "avatar": user["avatar_url"],
-            "description": repo["description"],
+            "description": full_repo["description"],
             "tags": tags,
             "images": filter_images(contents),
             "commits": commits,
