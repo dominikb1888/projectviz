@@ -4,10 +4,10 @@ function genHistograms() {
       var xscale = d3.scaleTime()
           .domain([new Date(2023, 10, 1), new Date(2024, 2, 1)])
           .range([0,120]);
-      var yscale = d3.scaleLog([1,10], [1,100]);
+      var yscale = d3.scaleLog([1,10], [1,30]);
       var w = 10
       var h = 10
-      var bh = 220
+      var bh = 70
       var bw = 300
 
       var today = new Date();
@@ -44,22 +44,24 @@ function genHistograms() {
 
       svg
         .append("g")
-          .attr("fill", "yellowgreen")
+          .attr("fill", "rgb(13, 110, 253)")
         .selectAll("rect")
         .data(grouped)
         .join("rect")
           .attr("x", function (d) { date = new Date(d.date); return xscale(date) * w;})
-          .attr("y", (d)  => -(yscale(d.count) - bh))
-          .attr("height", (d) => yscale(d.count))
+          .attr("y", (d)  => -(yscale(d.count) - bh + 5))
+          .attr("height", (d) => yscale(d.count) + 5)
           .attr("width", w + "px")
+          .attr("class", "text-bg-success p-3")
+          .text(d => d.count)
           .on("mousemove", mousemove)
           .on("mouseleave", mouseleave)
           .on("mouseover", mouseover);
 
         svg
           .append('path')
-          .attr('d', d3.line()([[today_pos, 0], [today_pos, 300]]))
-          .attr('stroke', 'black');
+          .attr('d', d3.line()([[today_pos, 0], [today_pos, bh]]))
+          .attr('stroke', "rgb(13, 110, 253)");
 
       return this
     });

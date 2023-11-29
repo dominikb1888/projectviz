@@ -38,7 +38,7 @@ def get_repo(org, repos=True, *args):
     while True:
         params = {"per_page": per_page, "page": page}
         response = requests.get(url, headers=headers, params=params)
-        
+
         if response.status_code == 200:
             data = response.json()
             data = [data] if not isinstance(data, list) else data
@@ -53,13 +53,18 @@ def get_repo(org, repos=True, *args):
             
     return all_data
 
-def filter_images(json_list):
+def filter_images(json_list, project, org=GHORG):
     images = []
     for content in json_list:
-        if content["type"] == "file" and content["path"].endswith(
-            (".jpg", ".gif", ".png")
-        ):
+        is_image = content["path"].endswith((".jpg", ".gif", ".png"))
+        if content["type"] == "file" and is_image:
             images.append(content["download_url"])
+        
+        if content["type"] == "dir":
+            dir_list = get_repo(org, False, project, "contents", content['path'] )
+            images_dir = filter_images(dir_list, project)
+            if len(images_dir) > 0: 
+                images.extend(images_dir)
 
     return images
 
@@ -86,7 +91,7 @@ def get_data(org=GHORG):
             "avatar": user["avatar_url"],
             "description": full_repo["description"],
             "tags": tags,
-            "images": filter_images(contents),
+            "images": filter_images(contents, project),
             "commits": commits,
             "commit_count": len(commits),
             "commit_latest": commits[-1],

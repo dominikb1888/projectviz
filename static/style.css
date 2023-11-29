@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
-body {
-    font-family: 'Lato', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
 
 ul#repolist {
     max-width: 1800px;
@@ -12,33 +9,25 @@ ul#repolist {
 ul#repolist > li {
     display: block;
     float: left;
-    width: 320px;
-    height: 260px;
-    background: lightcoral;
+    width: 360px;
     margin: 10px;
     border-radius: 20px;
     overflow: hidden;
-    border: 5px solid yellowgreen;
     border-bottom: 0;
 } 
 
-ul#repolist div.stats {
-    height: 220px;
-    overflow: hidden;
+ul#repolist .carousel-item.active img {
+    height: 30vh !important;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid #eee;
 }
 
-
-
-
-
-ul#repolist div.histogram {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-    top: -35px;
-    z-index: 10;
-    opacity: 0.9;
+ul#repolist .carousel-item {
+        width: 100%;
+        height: 30vh;
 }
+
 
 ul#repolist div.histogram svg {
     position: relative;
@@ -54,8 +43,6 @@ ul#repolist ul.images li {
 
 ul#repolist ul.images img {
     width: 320px;
-    position:relative;
-    top: -250px;
     z-index: 0;
 }
 
@@ -68,7 +55,6 @@ ul#repolist div.commit_count {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: yellowgreen;
     display: block;
     position: relative;
     left: 284px;
@@ -76,18 +62,11 @@ ul#repolist div.commit_count {
     text-align: center;
 }
 
-ul#repolist div.user {
-    background-color: yellowgreen;
-    z-index: 100;
-    width: 330px;
-    height: 40px;
-    position: relative;
-    padding-left: 15px;
+.username.btn {
+    width: 100%;
 }
 
 ul#repolist div.user a {
-    color: white;
-    font-weight: 900;
     text-decoration: none;
     vertical-align: middle;
 }
@@ -97,12 +76,12 @@ ul#repolist div.user img {
     position: relative;
     margin-right: 10px;
     z-index: 0;
+    border-radius: 0.25rem;
 }
 
 ul#repolist rect:hover {
     opacity: .6;
     pointer-events: all;
-    stroke: yellowgreen;
     stroke-width: 2px;
 }
 

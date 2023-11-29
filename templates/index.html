@@ -4,6 +4,8 @@
 
   <head>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.6.1/dist/htmx.min.js"></script>
     <script src="https://unpkg.com/underscore@1.13.6/underscore-umd-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" charset="utf-8"></script>
@@ -14,25 +16,36 @@
 
       <ul id="repolist">
         {% for repo in repos %}
-        <li>
+        <li class="card">
          
-          <div class="stats">
-            <div class="commit_count">{{repo.commit_count}}</div>
-            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}">
-              
+          <div class="card-img-top">
+           
+            <div class="carousel slide">
+              <div class="carousel-indicators">
+                {% for imageurl in repo.images %}
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{loop.index}}" class="{{'active' if loop.index == 1 }}" aria-current="{{'true' if loop.index == 0 }}" aria-label="Slide {{loop.index + 1}}"></button>
+                {% endfor %}
+              </div>
+              <ul class="images carousel-inner">
+                {% for imageurl in repo.images %}
+                <li class="carousel-item {{'active' if loop.index == 1 }}"><img src="{{imageurl}}" alt="{{repo.description}}" /></li>
+                {% endfor %}
+              </ul>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-            
-            <ul class="images">
-              {% for imageurl in repo.images %}
-              <li><img src="{{imageurl}}" alt="{{repo.description}}" /></li>
-              {% endfor %}
-            </ul>
            
           </div>
 
-          <div class="user"> 
-            <a href="{{repo.repo.html_url}}"><img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/></a>
-            <a href="{{repo.repo.html_url}}" class="username">{{repo.user}}</a>
+          <div class="user card-body"> 
+            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}"> </div>
+            <a href="{{repo.repo.html_url}}" class="username btn btn-primary"><img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/>{{repo.user}} ({{repo.commit_count}})</a>
           </div>
           
          
