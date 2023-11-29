@@ -13,7 +13,7 @@ ul#repolist > li {
     display: block;
     float: left;
     width: 320px;
-    height: 160px;
+    height: 260px;
     background: lightcoral;
     margin: 10px;
     border-radius: 20px;
@@ -23,7 +23,7 @@ ul#repolist > li {
 } 
 
 ul#repolist div.stats {
-    height: 120px;
+    height: 220px;
     overflow: hidden;
 }
 
@@ -33,9 +33,9 @@ ul#repolist div.stats {
 
 ul#repolist div.histogram {
     position: relative;
-    height: 200px;
-    top: -25px;
+    height: 220px;
     overflow: hidden;
+    top: -35px;
     z-index: 10;
     opacity: 0.9;
 }
@@ -99,3 +99,17 @@ ul#repolist div.user img {
     z-index: 0;
 }
 
+ul#repolist rect:hover {
+    opacity: .6;
+    pointer-events: all;
+    stroke: yellowgreen;
+    stroke-width: 2px;
+}
+
+.tooltip-area {
+    background-color: white;
+    border: 2px solid darkgrey;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 8px;
+}

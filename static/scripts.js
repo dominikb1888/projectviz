@@ -5,18 +5,43 @@ function genHistograms() {
           .domain([new Date(2023, 10, 1), new Date(2024, 2, 1)])
           .range([0,120]);
       var yscale = d3.scaleLog([1,10], [1,100]);
-      var w = 5
+      var w = 10
       var h = 10
-      var bh = 150
+      var bh = 220
       var bw = 300
 
       var today = new Date();
       var today_pos = xscale(today) * w
+    
+      var tooltip = d3.select('.tooltip-area')
+        .style('opacity', 0)
+        .style('display', 'block')
+        .style('position', 'absolute')
+        .style('z-index', 100);
+
+      const mouseover = (event, d) => {
+        tooltip.style("opacity", 1);
+      };
+
+      const mouseleave = (event, d) => {
+        tooltip.style('opacity', 0);
+      }
+
+      const mousemove = (event, d) => {
+        const text = d3.select('.tooltip-area__text');
+        text.text(d.count);
+        const [x, y] = d3.pointer(event,"body");
+   
+        tooltip
+          .style('left', x+5 + "px")
+          .style('top', y-33 + "px");
+      };
+
+
       const svg = d3.select(this)
           .append("svg")
           .attr("viewBox", [0, 0, bw, bh]);
 
-      console.log(grouped)
       svg
         .append("g")
           .attr("fill", "yellowgreen")
@@ -27,6 +52,9 @@ function genHistograms() {
           .attr("y", (d)  => -(yscale(d.count) - bh))
           .attr("height", (d) => yscale(d.count))
           .attr("width", w + "px")
+          .on("mousemove", mousemove)
+          .on("mouseleave", mouseleave)
+          .on("mouseover", mouseover);
 
         svg
           .append('path')

@@ -18,7 +18,10 @@
          
           <div class="stats">
             <div class="commit_count">{{repo.commit_count}}</div>
-            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}"></div>
+            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}">
+              
+            </div>
+            
             <ul class="images">
               {% for imageurl in repo.images %}
               <li><img src="{{imageurl}}" alt="{{repo.description}}" /></li>
@@ -35,9 +38,11 @@
          
         </li>
         {% endfor %}
+        
       </ul>
-
-    </div>
+      <g class="tooltip-area">
+        <text class="tooltip-area__text"></text>
+      </g>
   </body>
 </html>
 
