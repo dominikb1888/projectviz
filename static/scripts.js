@@ -39,8 +39,12 @@ function genHistograms() {
 
 
       const svg = d3.select(this)
+          .append("div")
+            .attr("class", "svg-container")
           .append("svg")
-          .attr("viewBox", [0, 0, bw, bh]);
+          .attr("preserveAspectRatio", "xMinYMin meet")
+          .attr("viewBox", [0, 0, bw, bh])
+          .classed("svg-content", true);
 
       svg
         .append("g")

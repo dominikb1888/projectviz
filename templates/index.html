@@ -5,47 +5,58 @@
   <head>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.6.1/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <script src="https://unpkg.com/underscore@1.13.6/underscore-umd-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" charset="utf-8"></script>
     <script src="/static/scripts.js"></script>
   </head>
 
   <body onload="genHistograms()">
-
       <ul id="repolist">
         {% for repo in repos %}
-        <li class="card">
+        {% set outer_loop = loop %}
+        <li class="card clearfix">
          
           <div class="card-img-top">
            
-            <div class="carousel slide">
+            <div id="carousel{{outer_loop.index0}}" class="carousel slide">
               <div class="carousel-indicators">
+                
                 {% for imageurl in repo.images %}
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{loop.index}}" class="{{'active' if loop.index == 1 }}" aria-current="{{'true' if loop.index == 0 }}" aria-label="Slide {{loop.index + 1}}"></button>
+                <button type="button" data-bs-target="#carousel{{outer_loop.index0}}" data-bs-slide-to="{{loop.index0}}" class="{{'active' if loop.index0 == 0}}" aria-current="{{'true' if loop.index0 == 0 }}" aria-label="Slide {{loop.index0 + 1}}"></button>
                 {% endfor %}
               </div>
-              <ul class="images carousel-inner">
-                {% for imageurl in repo.images %}
-                <li class="carousel-item {{'active' if loop.index == 1 }}"><img src="{{imageurl}}" alt="{{repo.description}}" /></li>
-                {% endfor %}
-              </ul>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <div class="carousel-inner">
+                <div class="carousel-inner">
+                  {% for imageurl in repo.images %}
+                  <div class="carousel-item {{'active' if loop.index0 == 0 }}"><img src="{{imageurl}}" alt="{{repo.description}}"></div>
+                  {% endfor %}
+                </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{outer_loop.index0}}" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel{{outer_loop.index0}}" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
-           
-          </div>
+            </div>
+
+      
 
           <div class="user card-body"> 
-            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}"> </div>
-            <a href="{{repo.repo.html_url}}" class="username btn btn-primary"><img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/>{{repo.user}} ({{repo.commit_count}})</a>
+            <div class="histogram" data-histogram="{{repo.commit_histogram_daily}}"></div>
+            <a href="{{repo.repo.html_url}}" class="username btn btn-primary">
+              <img src="{{repo.avatar}}" alt="{{repo.repo.name}}"/>
+      
+              <span class="user_name">{{repo.user}}</span> 
+              <span class="commit_count">{{repo.commit_count}}</span>
+              <span class="languages">
+                {% for lang in repo.languages %}
+                <i class="devicon-{{lang}}-plain"></i>
+                {% endfor %}
+            </a>
           </div>
           
          
@@ -56,6 +67,7 @@
       <g class="tooltip-area">
         <text class="tooltip-area__text"></text>
       </g>
-  </body>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body> 
 </html>
 

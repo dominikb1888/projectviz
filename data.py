@@ -73,8 +73,8 @@ def get_data(org=GHORG):
     repo_list = []
     for repo in get_repo(org=org, repos=True):
         project = repo["name"]
+        print(project)
         full_repo = get_repo(org, False, project)[0]
-        print(full_repo)
         tags = get_repo(org, False, project, "tags")
         contents = get_repo(org, False, project, "contents")
         commits = sorted(
@@ -82,6 +82,8 @@ def get_data(org=GHORG):
             key=lambda commit: commit["commit"]["author"]["date"],
         )
         languages = get_repo(org, False, project, "languages")
+        languages = list(map(str.lower, list(languages[0].keys())))
+        print(languages)
         user = (
             full_repo["parent"]["owner"] if full_repo.get("parent", False) else full_repo["owner"]
         )  # Mapping Data
@@ -98,7 +100,7 @@ def get_data(org=GHORG):
             "commit_latest_date": str(commits[-1]["commit"]["author"]["date"]),
             "commit_latest_message": commits[-1]["commit"]["message"],
             "commit_histogram_daily": json.dumps(get_commit_histogram(commits)),
-            "languages": languages,
+            "languages": languages
         }
 
         repo_list.append(item)
