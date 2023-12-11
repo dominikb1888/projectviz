@@ -1,3 +1,4 @@
 # projectviz
 
-See the demo here: [Codespaces Preview](https://supreme-space-waddle-g7wqqxq5pfvwq4-8000.app.github.dev)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/dominikb1888/projectviz?quickstart=1)
+

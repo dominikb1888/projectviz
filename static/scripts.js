@@ -2,7 +2,7 @@ function genHistograms() {
     d3.selectAll(".histogram").each(function(d,i) {
       const grouped = JSON.parse(d3.select(this).attr("data-histogram"));
       var xscale = d3.scaleTime()
-          .domain([new Date(2023, 10, 1), new Date(2024, 2, 1)])
+          .domain([new Date(2023, 10, 15), new Date(2024, 2, 1)])
           .range([0,120]);
       var yscale = d3.scaleLog([1,10], [1,30]);
       var w = 10
@@ -29,7 +29,7 @@ function genHistograms() {
 
       const mousemove = (event, d) => {
         const text = d3.select('.tooltip-area__text');
-        text.text(d.count);
+        text.text(d.date + "  |  " + d.count);
         const [x, y] = d3.pointer(event,"body");
    
         tooltip
@@ -57,7 +57,7 @@ function genHistograms() {
           .attr("height", (d) => yscale(d.count) + 5)
           .attr("width", w + "px")
           .attr("class", "text-bg-success p-3")
-          .text(d => d.count)
+          .text(d => d.count + " - " + d.date)
           .on("mousemove", mousemove)
           .on("mouseleave", mouseleave)
           .on("mouseover", mouseover);
