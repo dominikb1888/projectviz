@@ -6,7 +6,7 @@ ul#repolist {
 ul#repolist > li {
     width: 360px;
     float: left;
-    height: 33vh;
+    height: 36vh;
     margin: 1vh;
 }
 
@@ -31,7 +31,7 @@ ul#repolist div.user a {
 }
 
 ul#repolist div.user img {
-    height: 4vh; 
+    height: 4vh;
     position: relative;
     margin-right: 1vh;
     z-index: 0;
