@@ -51,5 +51,6 @@
   },
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "nix-shell --run 'uvicorn main:app --host 0.0.0.0 --port 8000'"
+  // "postCreateCommand": "nix-shell --run 'uvicorn main:app --host 0.0.0.0 --port 8000'",
+  "postStartCommand":"nix-shell --run 'uvicorn main:app --host 0.0.0.0 --port 8000'"
 }
